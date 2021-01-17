@@ -4,7 +4,7 @@ from datetime import datetime
 
 ser = serial.Serial('/dev/ttyUSB1', 921600)
 
-f = open("10khz_short_circuit.csv", "w")
+f = open("1_10khz_short_circuit.csv", "w")
 
 now = datetime.now()
 
