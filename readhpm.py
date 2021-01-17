@@ -17,6 +17,8 @@ while True:
             number = int(binascii.hexlify(char[:-2]), 16)
         except Exception as e:
             print(e)
+    else:
+        print("Read error")
         
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime("%d-%b-%Y (%H:%M:%S.%f)")
