@@ -19,6 +19,7 @@ while True:
             print(e)
     else:
         print("Read error")
+        print(len(char))
         
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime("%d-%b-%Y (%H:%M:%S.%f)")
