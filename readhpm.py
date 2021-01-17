@@ -2,7 +2,7 @@ import serial
 import binascii
 ser = serial.Serial('/dev/ttyUSB1', 921600)
 
-f = open("hpmoutput.csv", "w")
+f = open("10khz_short_circuit.csv", "w")
 
 while True:
     char = ser.read_until(b'\xa0\r', size=6)
