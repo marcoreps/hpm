@@ -12,7 +12,7 @@ f.write("time,counts\n")
 
 while True:
     char = ser.read_until(b'\xa0\r')
-    if (len(char)=6):
+    if ( len(char) == 6 ):
         try:
             number = int(binascii.hexlify(char[:-2]), 16)
         except Exception as e:
