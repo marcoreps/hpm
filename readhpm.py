@@ -8,6 +8,7 @@ f = open("10khz_short_circuit.csv", "w")
 
 now = datetime.now()
 
+f.write("time,counts\n")
 
 while True:
     char = ser.read_until(b'\xa0\r', size=6)
@@ -15,4 +16,6 @@ while True:
         number = int(binascii.hexlify(char[:-2]), 16)
     except Exception:
         pass
-    f.write(now = datetime.now()+","+str(number)+"\n")
+    dateTimeObj = datetime.now()
+    timestampStr = dateTimeObj.strftime("%d-%b-%Y (%H:%M:%S.%f)")
+    f.write(timestampStr+","+str(number)+"\n")
