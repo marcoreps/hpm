@@ -15,4 +15,4 @@ while True:
         number = int(binascii.hexlify(char[:-2]), 16)
     except Exception:
         pass
-    f.write(now = datetime.now()+","str(number)+"\n")
+    f.write(now = datetime.now()+","+str(number)+"\n")
