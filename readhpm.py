@@ -11,11 +11,12 @@ now = datetime.now()
 f.write("time,counts\n")
 
 while True:
-    char = ser.read_until(b'\xa0\r', size=6)
+    char = ser.read_until(b'\xa0\r')
     try:
         number = int(binascii.hexlify(char[:-2]), 16)
-    except Exception:
-        pass
+    except Exception as e:
+        print(e)
+        
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime("%d-%b-%Y (%H:%M:%S.%f)")
     f.write(timestampStr+","+str(number)+"\n")
