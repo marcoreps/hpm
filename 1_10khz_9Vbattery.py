@@ -1,26 +1,40 @@
 import serial
 import binascii
 from datetime import datetime
+import threading
 
-ser = serial.Serial('/dev/ttyUSB1', 921600)
+class ReadLine:
+    def __init__(self, s):
+        self.buf = bytearray()
+        self.s = s
+    
+    def readline(self):
+        i = self.buf.find(b"\n")
+        if i >= 0:
+            r = self.buf[:i+1]
+            self.buf = self.buf[i+1:]
+            return r
+        while True:
+            i = max(1, min(2048, self.s.in_waiting))
+            data = self.s.read(i)
+            i = data.find(b"\n")
+            if i >= 0:
+                r = self.buf + data[:i+1]
+                self.buf[0:] = data[i+1:]
+                return r
+            else:
+                self.buf.extend(data)
+                
+
+s = serial.Serial('/dev/ttyUSB1', 921600)
+rl = ReadLine(s)
 
 f = open("1_10khz_9Vbattery.csv", "w")
-
-now = datetime.now()
 
 f.write("time,counts\n")
 
 while True:
-    char = ser.read_until(b'\xa0\r')
-    if ( len(char) == 6 ):
-        try:
-            number = int(binascii.hexlify(char[:-2]), 16)
-        except Exception as e:
-            print(e)
-    else:
-        print("Read error")
-        print(len(char))
-        
-    dateTimeObj = datetime.now()
-    timestampStr = dateTimeObj.strftime("%d-%b-%Y (%H:%M:%S.%f)")
-    f.write(timestampStr+","+str(number)+"\n")
+    print(rl.readline())
+    
+    
+    
