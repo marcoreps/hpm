@@ -15,7 +15,8 @@ buffer_1 = bytearray()
 def readserial(dev, baud, buf):
     s = serial.Serial(dev, baud)
     while True:
-        while s.in_waiting:
+        while s.in_waiting():
+            print(s.in_waiting())
             buf.extend(s.read())
         
 thread_1 = threading.Thread(target=readserial, args=(hpm1_dev, hpm1_baud, buffer_1))
