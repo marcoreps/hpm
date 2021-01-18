@@ -2,39 +2,43 @@ import serial
 import binascii
 from datetime import datetime
 import threading
+import time
 
-class ReadLine:
-    def __init__(self, s):
-        self.buf = bytearray()
-        self.s = s
-    
-    def readline(self):
-        i = self.buf.find(b'\xa0\r')
-        if i >= 0:
-            r = self.buf[:i+1]
-            self.buf = self.buf[i+1:]
-            return r
-        while True:
-            i = max(1, min(2048, self.s.in_waiting))
-            data = self.s.read(i)
-            i = data.find(b'\xa0\r')
-            if i >= 0:
-                r = self.buf + data[:i+1]
-                self.buf[0:] = data[i+1:]
-                return r
-            else:
-                self.buf.extend(data)
-                
 
-s = serial.Serial('/dev/ttyUSB1', 921600)
-rl = ReadLine(s)
+hpm1_dev = 'COM5'
+hpm1_baud = 921600
 
 f = open("1_10khz_9Vbattery.csv", "w")
-
 f.write("time,counts\n")
 
+buffer_1 = bytearray()
+
+lock = threading.Lock()
+
+def readserial(dev, baud, buf, lock):
+    s = serial.Serial(dev, baud)
+    while True:
+        if s.in_waiting > 1024:
+            reading=s.read(1024)
+            with lock:
+                buf.extend(reading)
+        
+thread_1 = threading.Thread(target=readserial, args=(hpm1_dev, hpm1_baud, buffer_1, lock))
+thread_1.daemon = True
+thread_1.start()
+
 while True:
-    print(int(binascii.hexlify(rl.readline()[:-2]), 16))
-    
-    
-    
+    print(len(buffer_1))
+
+    pos=buffer_1.find(b'\xa0\r')
+    if(pos>=0):
+        if(pos>0):
+            number = int(binascii.hexlify(buffer_1[:pos]), 16)
+        with lock:
+            del buffer_1[:pos+2]
+        if(pos==4):
+            dateTimeObj = datetime.now()
+            timestampStr = dateTimeObj.strftime("%d-%b-%Y (%H:%M:%S.%f)")
+            f.write(timestampStr+","+str(number)+"\n")
+        else:
+            print("read error")
