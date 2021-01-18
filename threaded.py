@@ -19,10 +19,10 @@ def readserial(dev, baud, buf):
             buf.extend(s.read())
         
 thread_1 = threading.Thread(target=readserial, args=(hpm1_dev, hpm1_baud, buffer_1))
-thread_1.daemon = True
+#thread_1.daemon = True
 thread_1.start()
 
 while True:
     print(len(buffer_1))
-    print(buffer_1.find(b'\xa0\r'))
+    #print(buffer_1.find(b'\xa0\r'))
     #number = int(binascii.hexlify(buffer_1[:-2]), 16)
