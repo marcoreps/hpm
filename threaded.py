@@ -1,6 +1,8 @@
 import serial
 import binascii
 from datetime import datetime
+import threading
+
 
 hpm1_dev = '/dev/ttyUSB1'
 hpm1_baud = 921600
