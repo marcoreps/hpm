@@ -34,7 +34,7 @@ f = open("1_10khz_9Vbattery.csv", "w")
 f.write("time,counts\n")
 
 while True:
-    print(rl.readline())
+    print(int(binascii.hexlify(rl.readline()[:-2]), 16))
     
     
     
