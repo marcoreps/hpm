@@ -4,7 +4,7 @@ from datetime import datetime
 import threading
 
 
-hpm1_dev = '/dev/ttyUSB1'
+hpm1_dev = '/dev/ttyUSB0'
 hpm1_baud = 921600
 
 f = open("1_10khz_short_circuit.csv", "w")
