@@ -19,6 +19,7 @@ def readserial(dev, baud, buf):
             buf.extend(s.read())
         
 thread_1 = threading.Thread(target=readserial, args=(hpm1_dev, hpm1_baud, buffer_1))
+thread_1.daemon = True
 thread_1.start()
 
 while True:
