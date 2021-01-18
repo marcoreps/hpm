@@ -20,4 +20,4 @@ thread_1 = threading.Thread(target=readserial, args=(hpm1_dev, hpm1_baud, buffer
 thread_1.start()
 
 while True:
-    print(len(buffer_1)
+    print(len(buffer_1))
