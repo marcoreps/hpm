@@ -5,7 +5,7 @@ import threading
 import time
 
 
-hpm1_dev = 'COM10'
+hpm1_dev = '/dev/ttyUSB1'
 hpm1_baud = 921600
 
 f = open("2_10khz_short_circuit.csv", "w")
