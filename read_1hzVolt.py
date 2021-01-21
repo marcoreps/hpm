@@ -4,7 +4,7 @@ import threading
 import time
 import statistics
 
-hpm1_dev = 'COM5'
+hpm1_dev = '/dev/ttyUSB0'
 hpm1_baud = 921600
 
 f = open("unit1_1HzVolt_Fluke732A.csv", "w", buffering=1)
