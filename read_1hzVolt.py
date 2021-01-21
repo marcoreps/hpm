@@ -7,7 +7,7 @@ import statistics
 hpm1_dev = '/dev/ttyUSB0'
 hpm1_baud = 921600
 
-f = open("unit1_1HzVolt_Fluke732A.csv", "w", buffering=1)
+f = open("123.csv", "w", buffering=1)
 f.write("time,volt\n")
 
 buffer_1 = bytearray()
