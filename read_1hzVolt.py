@@ -4,7 +4,7 @@ import threading
 import time
 import statistics
 
-hpm1_dev = '/dev/ttyUSB0'
+hpm1_dev = '/dev/ttyUSB2'
 hpm1_baud = 921600
 
 f = open("123.csv", "w", buffering=1)
@@ -15,7 +15,7 @@ buffer_1 = bytearray()
 def readserial(dev, baud, buf):
     s = serial.Serial(dev, baud)
     while True:
-            reading=s.read(102400)
+            reading=s.read(10000*6)
             buf.extend(reading)
         
 thread_1 = threading.Thread(target=readserial, args=(hpm1_dev, hpm1_baud, buffer_1))
