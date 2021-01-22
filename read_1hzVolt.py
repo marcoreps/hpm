@@ -4,7 +4,7 @@ import threading
 import time
 import statistics
 
-hpm1_dev = '/dev/ttyUSB2'
+hpm1_dev = '/dev/ttyUSB0'
 hpm1_baud = 921600
 
 f = open("123.csv", "w", buffering=1)
